@@ -1,0 +1,26 @@
+== Szenario 1: P20 im Flug, LOS faellt 3x aus dem Radarbereich (t=60, 180, 300 s),
+   Hintergrundlast bis 1 gleichzeitiger VAC-Job
+
+t=  60.0s  LOS ausserhalb -> NORDSTAL: RADCADR=0; 'P20' (Core 0, VAC 0) schlaeft weiter
+           belegt: 2/7 Core Sets, 2/5 VAC, verwaiste Jobs: 1
+t= 180.0s  LOS ausserhalb -> NORDSTAL: RADCADR=0; 'P20 (aus DODES)' (Core 1, VAC 1) schlaeft weiter
+           belegt: 4/7 Core Sets, 4/5 VAC, verwaiste Jobs: 2
+t= 300.0s  LOS ausserhalb -> NORDSTAL: RADCADR=0; 'P20 (aus DODES)' (Core 3, VAC 3) schlaeft weiter
+           belegt: 4/7 Core Sets, 4/5 VAC, verwaiste Jobs: 3
+t= 301.0s  ALARM 1201 (BAILOUT) -> Software-Neustart; vorher belegt 5/7 Core, 5/5 VAC
+
+== Kontrollfall: dasselbe ohne Ausfall der Sichtlinie
+
+t= 600.0s  Ende, kein Ueberlauf (max. Belegung: 3/7 Core, 3/5 VAC)
+
+== Parametervariation: Anzahl Sichtlinien-Ausfaelle bis zum Alarm
+   (je 50 Zufallslaeufe, Ausfaelle alle 60 s)
+
+   Hintergrund-VAC-Spitze | Ausfaelle bis Alarm (min / median / max) | Alarmtyp
+                         0 |   4 /   4 /   4                         | 1201
+                         1 |   3 /   3 /   3                         | 1201
+                         2 |   2 /   2 /   2                         | 1201
+                         3 |   1 /   1 /   1                         | 1201
+
+== Weck-Reihenfolge, wenn zwei P20-Jobs in RADSTALL schlafen (JOBWAKE scannt ab Core 0)
+   Lock-on weckt: 'P20 (original, verwaist)' (Core Set 0); weiter schlafend: ['P20 (aus DODES)']

@@ -1,0 +1,73 @@
+
+================ Luminary099 ================
+TIG-0 setzt Phase: OCT 40033  ->  Gruppe 3, Phase 3, TBASE=1   (BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc:403)
+Normalablauf: WAITLIST plant Task 'P63ZOOM'   (BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc:400)
+Neustart:     3.3SPOT -> WAITLIST-Task 'ZOOM', Verzoegerung -GENADR ZOOMTIME   (RESTART_TABLES.agc:164)
+
+  Ablauf NORMAL:
+    ENTRY     P63ZOOM  (BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc:564)
+    WRITE     AVEGEXIT
+    CALL      FLATOUT
+    JUMP      P40ZOOMA
+    LABEL     P40ZOOMA
+    PHASCHNG  3
+    END       TASKOVER
+
+  Ablauf NEUSTART:
+    EQUATE    ZOOM = P40ZOOMA
+    ENTRY     P40ZOOMA  (BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc:579)
+    PHASCHNG  3
+    END       TASKOVER
+
+  Ergebnis            Normal   Neustart
+  FLATOUT (Vollschub)    ja       NEIN
+  Landelenkung aktiv     ja       NEIN
+  Schubbefehl ausgegeben ja       NEIN
+
+  Zeitachse Luminary099 (Neustart t s nach TIG, Throttle-up bei 26 s):
+    t =   2.0 s  ->  Triebwerk bleibt bei ~10 %, keine Landelenkung
+    t =  10.0 s  ->  Triebwerk bleibt bei ~10 %, keine Landelenkung
+    t =  20.0 s  ->  Triebwerk bleibt bei ~10 %, keine Landelenkung
+    t =  25.9 s  ->  Triebwerk bleibt bei ~10 %, keine Landelenkung
+    t =  26.1 s  ->  kein Effekt (Zoom schon erfolgt, Gruppe 3 bereits aus)
+    t =  60.0 s  ->  kein Effekt (Zoom schon erfolgt, Gruppe 3 bereits aus)
+
+================ Luminary116 ================
+TIG-0 setzt Phase: OCT 40033  ->  Gruppe 3, Phase 3, TBASE=1   (BURN,_BABY,_BURN_--_MASTER_IGNITION_ROUTINE.agc:384)
+Normalablauf: WAITLIST plant Task 'ZOOM'   (BURN,_BABY,_BURN_--_MASTER_IGNITION_ROUTINE.agc:381)
+Neustart:     3.3SPOT -> WAITLIST-Task 'ZOOM', Verzoegerung -GENADR ZOOMTIME   (RESTART_TABLES.agc:152)
+
+  Ablauf NORMAL:
+    ENTRY     ZOOM  (BURN,_BABY,_BURN_--_MASTER_IGNITION_ROUTINE.agc:548)
+    CHECKMM   MODREG=63 == 63? ja
+    LABEL     P63ZOOM
+    UPFLAG    ZOOMFLAG
+    CALL      FLATOUT
+    JUMP      P40ZOOMA
+    LABEL     P40ZOOMA
+    PHASCHNG  3
+    END       TASKOVER
+
+  Ablauf NEUSTART:
+    ENTRY     ZOOM  (BURN,_BABY,_BURN_--_MASTER_IGNITION_ROUTINE.agc:548)
+    CHECKMM   MODREG=63 == 63? ja
+    LABEL     P63ZOOM
+    UPFLAG    ZOOMFLAG
+    CALL      FLATOUT
+    JUMP      P40ZOOMA
+    LABEL     P40ZOOMA
+    PHASCHNG  3
+    END       TASKOVER
+
+  Ergebnis            Normal   Neustart
+  FLATOUT (Vollschub)    ja       ja
+  Landelenkung aktiv     ja       ja
+  Schubbefehl ausgegeben ja       ja
+
+  Zeitachse Luminary116 (Neustart t s nach TIG, Throttle-up bei 26 s):
+    t =   2.0 s  ->  Throttle-up + Lenkung OK
+    t =  10.0 s  ->  Throttle-up + Lenkung OK
+    t =  20.0 s  ->  Throttle-up + Lenkung OK
+    t =  25.9 s  ->  Throttle-up + Lenkung OK
+    t =  26.1 s  ->  kein Effekt (Zoom schon erfolgt, Gruppe 3 bereits aus)
+    t =  60.0 s  ->  kein Effekt (Zoom schon erfolgt, Gruppe 3 bereits aus)
